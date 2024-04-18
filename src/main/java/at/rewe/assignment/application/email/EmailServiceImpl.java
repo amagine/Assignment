@@ -2,12 +2,14 @@ package at.rewe.assignment.application.email;
 
 import at.rewe.assignment.entity.Email;
 import at.rewe.assignment.infrastructure.kafka.email.producer.EmailProducer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class EmailServiceImpl implements EmailService {
 
@@ -22,19 +24,26 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public String generateRandomEmail() {
-        String emailAddress = emailGenerator.generate();
+        try {
+            String emailAddress = emailGenerator.generate();
 
-        Email email = new Email();
-        email.setSubject("Regarding Assignment");
-        email.setContent("This is a sample content");
-        email.setSender(emailAddress);
+            Email email = new Email();
+            email.setSubject("Regarding Assignment");
+            email.setContent("This is a sample content");
+            email.setSender(emailAddress);
 
-        List<String> recipients = new ArrayList<>();
-        recipients.add("recipient@domain.com");
+            List<String> recipients = new ArrayList<>();
+            recipients.add("recipient@domain.com");
 
-        email.setRecipients(recipients);
+            email.setRecipients(recipients);
 
-        emailProducer.sendMessage(email);
-        return emailAddress;
+            emailProducer.sendMessage(email);
+
+            return emailAddress;
+        } catch (IllegalStateException ex) {
+            log.error("Error generating random email", ex);
+        }
+
+        return null;
     }
 }

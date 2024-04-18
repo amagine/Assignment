@@ -24,6 +24,9 @@ public class ListStringConverter implements AttributeConverter<List<String>, Str
 
     @Override
     public List<String> convertToEntityAttribute(String value) {
-        return value != null ? Arrays.asList(value.split(delimiter)) : emptyList();
+        if (value == null || value.isEmpty()) {
+            return emptyList();
+        }
+        return Arrays.asList(value.split(delimiter));
     }
 }

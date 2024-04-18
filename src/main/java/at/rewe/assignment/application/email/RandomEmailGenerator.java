@@ -8,7 +8,7 @@ import java.util.Random;
 public class RandomEmailGenerator implements EmailGenerator {
 
     @Override
-    public String generate() {
+    public String generate() throws IllegalStateException {
         Random random = new Random();
 
         String email;

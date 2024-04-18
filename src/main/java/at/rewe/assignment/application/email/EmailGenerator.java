@@ -1,5 +1,5 @@
 package at.rewe.assignment.application.email;
 
 public interface EmailGenerator {
-    String generate();
+    String generate() throws IllegalStateException;
 }
