@@ -31,7 +31,7 @@ class StatsControllerTest {
     private EmailServiceImpl emailService;
 
     @Test
-    void testGetEmailStats() throws Exception {
+    public void testGetEmailStats() throws Exception {
         when(emailService.generateRandomEmail()).thenReturn("user123@gmail.com");
         String randomEmail = emailService.generateRandomEmail();
 

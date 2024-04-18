@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SpringBootTest
-class AssignmentApplicationTests {
+class AssignmentApplicationTest {
 
 	@Autowired
 	private EmailController emailController;
@@ -18,9 +19,14 @@ class AssignmentApplicationTests {
 	private StatsController statsController;
 
 	@Test
-	void contextLoads() throws Exception {
+	void contextLoads() {
 		assertThat(emailController).isNotNull();
 		assertThat(statsController).isNotNull();
+	}
+
+	@Test
+	void testMainMethod() {
+		assertDoesNotThrow(() -> AssignmentApplication.main(new String[] {}));
 	}
 
 }
