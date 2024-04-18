@@ -7,15 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@EmbeddedKafka(partitions = 3, topics = "emails")
 @SpringBootTest
-public class KafkaEmbeddedTest {
+public class KafkaProducerConsumerTest {
 
     @Autowired
     private EmailProducer emailProducer;
