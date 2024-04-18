@@ -4,7 +4,6 @@ import at.rewe.assignment.entity.Email;
 import at.rewe.assignment.infrastructure.kafka.email.producer.EmailProducerListener;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,16 +18,8 @@ import java.util.Map;
 @Configuration
 public class Producer {
 
-    private final EmailProducerListener emailProducerListener;
-
     @Value("${spring.kafka.consumer.bootstrap-servers}")
     private String bootstrapServers;
-
-
-    @Autowired
-    public Producer(EmailProducerListener emailProducerListener) {
-        this.emailProducerListener = emailProducerListener;
-    }
 
     @Bean
     public Map<String, Object> producerConfigs() {
@@ -48,7 +39,12 @@ public class Producer {
     @Bean
     public KafkaTemplate<String, Email> kafkaTemplate() {
         KafkaTemplate<String, Email> kafkaTemplate = new KafkaTemplate<>(producerFactory());
-        kafkaTemplate.setProducerListener(emailProducerListener);
+        kafkaTemplate.setProducerListener(emailProducerListener());
         return kafkaTemplate;
+    }
+
+    @Bean
+    public EmailProducerListener emailProducerListener() {
+        return new EmailProducerListener();
     }
 }
